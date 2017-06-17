@@ -1,0 +1,32 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.belvedere"
+    },
+    "jhipsterVersion": "4.5.2",
+    "baseName": "enredados",
+    "packageName": "com.belvedere",
+    "packageFolder": "com/belvedere",
+    "serverPort": "8080",
+    "authenticationType": "session",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": false,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "rememberMeKey": "4f661bfc490062796e166170d2d71e8a8a56d5fd",
+    "clientFramework": "angular2",
+    "useSass": false,
+    "clientPackageManager": "yarn",
+    "applicationType": "monolith",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false
+  }
+}

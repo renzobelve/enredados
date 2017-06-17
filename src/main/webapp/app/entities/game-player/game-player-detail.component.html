@@ -1,0 +1,41 @@
+
+<div *ngIf="gamePlayer">
+    <h2><span>Game Player</span> {{gamePlayer.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>Correct Questions</span></dt>
+        <dd>
+            <span>{{gamePlayer.correctQuestions}}</span>
+        </dd>
+        <dt><span>Points</span></dt>
+        <dd>
+            <span>{{gamePlayer.points}}</span>
+        </dd>
+        <dt><span>Player</span></dt>
+        <dd>
+            <div *ngIf="gamePlayer.player">
+                <a [routerLink]="['/player', gamePlayer.player?.id]">{{gamePlayer.player?.id}}</a>
+            </div>
+        </dd>
+        <dt><span>Game</span></dt>
+        <dd>
+            <div *ngIf="gamePlayer.game">
+                <a [routerLink]="['/game', gamePlayer.game?.id]">{{gamePlayer.game?.id}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'game-player/'+ gamePlayer.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

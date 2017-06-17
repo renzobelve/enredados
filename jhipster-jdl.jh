@@ -1,0 +1,81 @@
+/**
+ * Enums
+ */
+enum GameState {
+    OPEN, ACTIVE, CLOSE
+}
+
+enum QuestionType {
+    IMAGE, TEXT
+}
+
+enum LevelName {
+    BRONZE, SILVER, GOLD
+}
+
+/**
+ * Entities
+ */
+entity Player {
+  points Integer required
+}
+
+entity Level {
+  name LevelName required,
+  minPoints Integer required,
+  maxPoints Integer required,
+}
+
+entity GamePlayer {
+  correctQuestions Integer required,
+  points Integer required
+}
+
+entity Game {
+  state GameState required,
+  maxPlayers Integer required,
+  activePlayer Integer,
+  activeQuestion Integer 
+}
+
+entity Question {
+  question String required,
+  type QuestionType required,
+  answerTime Integer required,
+  answer String required
+}
+
+/**
+ * Relationships
+ */
+relationship OneToOne {
+  Player{user} to User{player}
+}
+
+relationship ManyToOne {
+  Player{level} to Level{}
+}
+
+relationship OneToMany {
+  Player{gamePlayers} to GamePlayer{player}
+}
+
+relationship OneToMany {
+  Game{gamePlayers} to GamePlayer{game}
+}
+
+relationship ManyToMany {
+  Game{questions} to Question{games}
+}
+
+/**
+ * Pagination
+ */
+paginate Game with infinite-scroll
+paginate Question with pager
+ 
+/**
+ * Services
+ */
+service Game with serviceClass
+service Question with serviceClass

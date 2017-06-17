@@ -1,0 +1,49 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "gamePlayers",
+            "otherEntityName": "gamePlayer",
+            "otherEntityRelationshipName": "game"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "games",
+            "relationshipName": "questions",
+            "otherEntityName": "question",
+            "otherEntityField": "id",
+            "ownerSide": true
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "state",
+            "fieldType": "GameState",
+            "fieldValues": "OPEN,ACTIVE,CLOSE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "maxPlayers",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "activePlayer",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "activeQuestion",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170601223517",
+    "entityTableName": "game",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceClass"
+}

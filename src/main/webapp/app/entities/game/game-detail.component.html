@@ -1,0 +1,43 @@
+
+<div *ngIf="game">
+    <h2><span>Game</span> {{game.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span>State</span></dt>
+        <dd>
+            <span>{{game.state}}</span>
+        </dd>
+        <dt><span>Max Players</span></dt>
+        <dd>
+            <span>{{game.maxPlayers}}</span>
+        </dd>
+        <dt><span>Active Player</span></dt>
+        <dd>
+            <span>{{game.activePlayer}}</span>
+        </dd>
+        <dt><span>Active Question</span></dt>
+        <dd>
+            <span>{{game.activeQuestion}}</span>
+        </dd>
+        <dt><span>Questions</span></dt>
+        <dd>
+            <span *ngFor="let questions of game.questions; let last = last">
+                <a [routerLink]="['/question', questions?.id ]">{{questions.id}}</a>{{last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'game/'+ game.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+</div>

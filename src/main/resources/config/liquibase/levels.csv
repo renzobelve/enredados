@@ -1,0 +1,4 @@
+id;name;min_points;max_points
+1;BRONZE;0;100
+2;SILVER;101;500
+3;GOLD;501;1000

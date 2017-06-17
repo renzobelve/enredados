@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-many",
+            "relationshipName": "games",
+            "otherEntityName": "game",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "questions"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "question",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "QuestionType",
+            "fieldValues": "IMAGE,TEXT",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "answerTime",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "answer",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170601223518",
+    "entityTableName": "question",
+    "dto": "no",
+    "pagination": "pager",
+    "service": "serviceClass"
+}
