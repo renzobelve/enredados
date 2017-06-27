@@ -1,8 +1,14 @@
 package com.belvedere.web.rest;
 
+import com.belvedere.domain.Game;
+import com.belvedere.domain.GamePlayer;
 import com.codahale.metrics.annotation.Timed;
 import com.belvedere.domain.Player;
+import com.belvedere.domain.Question;
+import com.belvedere.repository.GamePlayerRepository;
+import com.belvedere.service.GameService;
 import com.belvedere.service.PlayerService;
+import com.belvedere.service.QuestionService;
 
 import com.belvedere.web.rest.util.HeaderUtil;
 import com.belvedere.web.rest.util.PaginationUtil;
@@ -36,9 +42,18 @@ public class PlayerResource {
     private static final String ENTITY_NAME = "player";
 
     private final PlayerService playerService;
+    
+    private final QuestionService questionService;
+    
+    private final GameService gameService;
+    
+    private final GamePlayerRepository gamePlayerRepository;
 
-    public PlayerResource(PlayerService playerService) {
+    public PlayerResource(PlayerService playerService, QuestionService questionService, GameService gameService, GamePlayerRepository gamePlayerRepository) {
         this.playerService = playerService;
+        this.questionService = questionService;
+        this.gameService = gameService;
+        this.gamePlayerRepository = gamePlayerRepository;
     }
 
     /**
@@ -68,6 +83,33 @@ public class PlayerResource {
     public ResponseEntity<Player> getPlayer(@PathVariable Long id) {
         Player player = playerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(player));
+    }
+    
+    /**
+     * POST /players/answer-question: answer question.
+     *
+     * @param gameID
+     * @param gamePlayerID
+     * @param questionID
+     * @param answer
+     * @return the ResponseEntity with status 200 (OK) and with body the player,
+     * or with status 404 (Not Found)
+     */
+    @PostMapping("/players/answer-question")
+    @Timed
+    public ResponseEntity<Boolean> answerQuestion(@RequestParam(value = "gameID") String gameID, @RequestParam(value = "gamePlayerID") String gamePlayerID, @RequestParam(value = "questionID") String questionID, @RequestParam(value = "answer") String answer) {
+        // Se busca al game player
+        GamePlayer gamePlayer = gamePlayerRepository.findOne(Long.parseLong(gamePlayerID));
+        // Se busca a la pregunta
+        Question question = questionService.findOne(Long.parseLong(questionID));
+        // Se responde a la pregunta
+        boolean result = playerService.answerQuestion(gamePlayer, question, answer);
+        // Se inicia el turno siguiente
+        Game game = gameService.findOne(Long.parseLong(gameID));
+        // Se inicia el turno siguiente
+        gameService.nextPlayerTurn(game);
+        
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
     }
 
 }

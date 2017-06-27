@@ -38,10 +38,12 @@ import com.belvedere.domain.enumeration.LevelName;
 import com.belvedere.domain.exception.GameFullException;
 import com.belvedere.domain.exception.PlayerInGameException;
 import com.belvedere.domain.exception.PlayerNotInLevelException;
+import com.belvedere.repository.GamePlayerRepository;
 import com.belvedere.repository.LevelRepository;
 import com.belvedere.repository.PlayerRepository;
 import com.belvedere.repository.UserRepository;
 import com.belvedere.service.PlayerService;
+import com.belvedere.service.QuestionService;
 import com.belvedere.service.dto.GameDTO;
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -84,12 +86,18 @@ public class GameResourceIntTest {
 
     @Autowired
     private LevelRepository levelRepository;
+    
+    @Autowired
+    private GamePlayerRepository gamePlayerRepository;
 
     @Autowired
     private GameService gameService;
 
     @Autowired
     private PlayerService playerService;
+    
+    @Autowired
+    private QuestionService questionService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -104,6 +112,8 @@ public class GameResourceIntTest {
     private EntityManager em;
 
     private MockMvc restGameMockMvc;
+    
+    private MockMvc restPlayerMockMvc;
 
     private Game game;
 
@@ -122,6 +132,12 @@ public class GameResourceIntTest {
         MockitoAnnotations.initMocks(this);
         GameResource gameResource = new GameResource(gameService, playerService);
         this.restGameMockMvc = MockMvcBuilders.standaloneSetup(gameResource)
+                .setCustomArgumentResolvers(pageableArgumentResolver)
+                .setControllerAdvice(exceptionTranslator)
+                .setMessageConverters(jacksonMessageConverter).build();
+        
+        PlayerResource playerResource = new PlayerResource(playerService, questionService, gameService, gamePlayerRepository);
+        this.restPlayerMockMvc = MockMvcBuilders.standaloneSetup(playerResource)
                 .setCustomArgumentResolvers(pageableArgumentResolver)
                 .setControllerAdvice(exceptionTranslator)
                 .setMessageConverters(jacksonMessageConverter).build();
@@ -481,5 +497,60 @@ public class GameResourceIntTest {
         assertThat(testGame.getWinner().getPoints()).isEqualTo(Game.GAME_WIN_POINTS);
         assertThat(testGame.getGamePlayers().get(0).getPlayer().getPoints()).isEqualTo(Game.GAME_WIN_POINTS);
         assertThat(testGame.getGamePlayers().get(1).getPlayer().getPoints()).isEqualTo(Game.GAME_WIN_POINTS);
+    }
+    
+    @Test
+    @Transactional
+    public void answerQuestion() throws Exception {
+        levelRepository.saveAndFlush(level);
+        userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(user2);
+        playerRepository.saveAndFlush(creator);
+        playerRepository.saveAndFlush(player);
+        
+        GameDTO gameDTO = new GameDTO();
+        gameDTO.setCreatorID(creator.getId());
+        gameDTO.setMaxPlayers(DEFAULT_MAX_PLAYERS);
+
+        // Create the Game
+        MvcResult gameResult = restGameMockMvc.perform(post("/api/games")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(gameDTO)))
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        String location = gameResult.getResponse().getHeader("Location");
+        Pattern pattern = Pattern.compile("(\\d+)$");
+        Matcher matcher = pattern.matcher(location);
+        matcher.find();
+        Long id = Long.parseLong(matcher.group(), 10);
+        
+        Game testGame = gameService.findOne(id);
+
+        // Add Player
+        restGameMockMvc.perform(post("/api/games/add-player")
+                .param("gameID", Long.toString(id))
+                .param("playerID", Long.toString(player.getId())))
+                .andExpect(status().isOk());
+        
+        Player testPlayer = playerService.findOne(testGame.getGamePlayers().get(0).getPlayer().getId());
+        testPlayer.setPoints(95);
+        testGame.getGamePlayers().get(0).setPoints(95);
+        // Answer Question
+        MvcResult playerResult = restPlayerMockMvc.perform(post("/api/players/answer-question")
+                .param("gameID", Long.toString(id))
+                .param("gamePlayerID", Long.toString(testGame.getGamePlayers().get(0).getId()))
+                .param("questionID", Long.toString(testGame.getQuestions().get(0).getId()))
+                .param("answer", testGame.getQuestions().get(0).getAnswer()))
+                .andExpect(status().isOk())
+                .andReturn();
+        
+        testPlayer = playerService.findOne(testGame.getGamePlayers().get(0).getPlayer().getId());
+        
+        assertThat(playerResult.getResponse().getContentAsString()).isEqualTo("true");
+        assertThat(testPlayer.getPoints()).isEqualTo(95 + Game.QUESTION_IMAGE_POINTS);
+        assertThat(testGame.getGamePlayers().get(0).getPoints()).isEqualTo(95 + Game.QUESTION_IMAGE_POINTS);
+        assertThat(testGame.getGamePlayers().get(0).getCorrectQuestions()).isEqualTo(1);
+        assertThat(testPlayer.getLevel().getName()).isEqualTo(LevelName.SILVER);
     }
 }
