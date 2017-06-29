@@ -22,6 +22,7 @@ export class JhiMainComponent implements OnInit {
         if (routeSnapshot.firstChild) {
             title = this.getPageTitle(routeSnapshot.firstChild) || title;
         }
+        title = 'Enredados | La diversión de aprender';
         return title;
     }
 

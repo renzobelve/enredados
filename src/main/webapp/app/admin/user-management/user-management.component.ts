@@ -3,6 +3,7 @@ import { Response } from '@angular/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventManager, PaginationUtil, ParseLinks, AlertService } from 'ng-jhipster';
 
+import { Player } from '../../entities/player';
 import { ITEMS_PER_PAGE, Principal, User, UserService, ResponseWrapper } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 
@@ -13,7 +14,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 export class UserMgmtComponent implements OnInit, OnDestroy {
 
     currentAccount: any;
-    users: User[];
+    players: Player[];
     error: any;
     success: any;
     routeData: any;
@@ -88,7 +89,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         );
     }
 
-    trackIdentity(index, item: User) {
+    trackIdentity(index, item: Player) {
         return item.id;
     }
 
@@ -121,7 +122,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         this.queryCount = this.totalItems;
-        this.users = data;
+        this.players = data;
     }
 
     private onError(error) {

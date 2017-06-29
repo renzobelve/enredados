@@ -11,5 +11,9 @@
                   file="config/liquibase/questions.csv"
                   separator=";"
                   tableName="question"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/players.csv"
+                  separator=";"
+                  tableName="player"/>
     </changeSet>
 </databaseChangeLog>
