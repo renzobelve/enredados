@@ -19,8 +19,7 @@ import java.util.stream.Collectors;
 public class UserDTO {
 
     private Long id;
-
-    @NotBlank
+    
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     private String login;
@@ -32,6 +31,7 @@ public class UserDTO {
     private String lastName;
 
     @Email
+    @NotBlank
     @Size(min = 5, max = 100)
     private String email;
 
@@ -71,7 +71,7 @@ public class UserDTO {
         Set<String> authorities) {
 
         this.id = id;
-        this.login = login;
+        this.login = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -98,7 +98,7 @@ public class UserDTO {
     }
 
     public void setLogin(String login) {
-        this.login = login;
+        this.login = this.getEmail();
     }
 
     public String getFirstName() {

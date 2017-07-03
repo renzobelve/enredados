@@ -1,6 +1,7 @@
 package com.belvedere.repository;
 
 import com.belvedere.domain.Player;
+import com.belvedere.domain.User;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.jpa.repository.*;
@@ -13,4 +14,5 @@ import org.springframework.data.jpa.repository.*;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player,Long> {
 
+    Player findOneByUser(User user);
 }

@@ -32,7 +32,7 @@ export class UserMgmtDeleteDialogComponent {
                 content: 'Deleted a user'});
             this.activeModal.dismiss(true);
         });
-        this.alertService.success(`An user is deleted with identifier ${login}`, null, null);
+        this.alertService.success(`Se ha eliminado un usuario: ${login}`, null, null);
     }
 }
 

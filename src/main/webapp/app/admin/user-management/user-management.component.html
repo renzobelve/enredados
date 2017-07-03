@@ -37,9 +37,6 @@
                     <td>{{ player.points }}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit"[routerLink]="['../user-management', player.user.login]" class="btn btn-info btn-sm">
-                                    <span class="fa fa-eye"></span>
-                            </button>
                             <button type="submit"[routerLink]="['/', { outlets: { popup: 'user-management/'+ player.user.login + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
                                     <span class="fa fa-pencil"></span>
                             </button>

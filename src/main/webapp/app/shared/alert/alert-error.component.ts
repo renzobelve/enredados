@@ -55,7 +55,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                             const fieldName = convertedField.charAt(0).toUpperCase() +
                                 convertedField.slice(1);
                             this.addErrorAlert(
-                                'Field ' + fieldName + ' cannot be empty', 'error.' + fieldError.message, { fieldName });
+                                'El campo ' + fieldName + ' es obligatorio', 'error.' + fieldError.message, { fieldName });
                         }
                     } else if (httpResponse.text() !== '' && httpResponse.json() && httpResponse.json().message) {
                         this.addErrorAlert(httpResponse.json().message, httpResponse.json().message, httpResponse.json().params);

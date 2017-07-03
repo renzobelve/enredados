@@ -49,8 +49,8 @@ export class UserMgmtDialogComponent implements OnInit {
 
     private onSaveSuccess(result, isCreated: boolean) {
         this.alertService.success(
-            isCreated ? `A new user is created with identifier ${result.json.login}`
-            : `An user is updated with identifier ${result.json.login}`,
+            isCreated ? `Se ha creado un nuevo usuario: ${result.json.login}`
+            : `Se ha actualizado un usuario: ${result.json.login}`,
             null, null);
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.isSaving = false;

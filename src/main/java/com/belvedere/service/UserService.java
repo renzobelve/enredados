@@ -5,6 +5,11 @@ import com.belvedere.domain.User;
 import com.belvedere.repository.AuthorityRepository;
 import com.belvedere.repository.PersistentTokenRepository;
 import com.belvedere.config.Constants;
+import com.belvedere.domain.Level;
+import com.belvedere.domain.Player;
+import com.belvedere.domain.enumeration.LevelName;
+import com.belvedere.repository.LevelRepository;
+import com.belvedere.repository.PlayerRepository;
 import com.belvedere.repository.UserRepository;
 import com.belvedere.security.AuthoritiesConstants;
 import com.belvedere.security.SecurityUtils;
@@ -42,12 +47,18 @@ public class UserService {
     private final PersistentTokenRepository persistentTokenRepository;
 
     private final AuthorityRepository authorityRepository;
+    
+    private final PlayerRepository playerReposiroty;
+    
+    private final LevelRepository levelRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, PlayerRepository playerRepository, LevelRepository levelRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
+        this.playerReposiroty = playerRepository;
+        this.levelRepository = levelRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -100,20 +111,24 @@ public class UserService {
         newUser.setEmail(email);
         newUser.setImageUrl(imageUrl);
         newUser.setLangKey(langKey);
-        // new user is not active
-        newUser.setActivated(false);
+        // new user is active
+        newUser.setActivated(true);
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        // new user gets a new player with min level
+        Level level = levelRepository.findOneByName(LevelName.BRONZE);
+        Player player = new Player(newUser, level);
         userRepository.save(newUser);
+        playerReposiroty.save(player);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
 
     public User createUser(UserDTO userDTO) {
         User user = new User();
-        user.setLogin(userDTO.getLogin());
+        user.setLogin(userDTO.getEmail());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
@@ -135,8 +150,11 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        // new user gets a new player with min level
+        Level level = levelRepository.findOneByName(LevelName.BRONZE);
+        Player player = new Player(user, level);
         userRepository.save(user);
-        log.debug("Created Information for User: {}", user);
+        playerReposiroty.save(player);
         return user;
     }
 
@@ -190,8 +208,9 @@ public class UserService {
 
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
+            Player player = playerReposiroty.findOneByUser(user);
+            playerReposiroty.delete(player);
             userRepository.delete(user);
-            log.debug("Deleted User: {}", user);
         });
     }
 
