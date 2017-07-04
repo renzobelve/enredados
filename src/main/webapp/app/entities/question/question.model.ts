@@ -4,7 +4,6 @@ const enum QuestionType {
     'TEXT'
 
 };
-import { Game } from '../game';
 export class Question {
     constructor(
         public id?: number,
@@ -12,7 +11,6 @@ export class Question {
         public type?: QuestionType,
         public answerTime?: number,
         public answer?: string,
-        public games?: Game,
     ) {
     }
 }

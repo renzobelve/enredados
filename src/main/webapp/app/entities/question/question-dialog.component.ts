@@ -9,7 +9,6 @@ import { EventManager, AlertService } from 'ng-jhipster';
 import { Question } from './question.model';
 import { QuestionPopupService } from './question-popup.service';
 import { QuestionService } from './question.service';
-import { Game, GameService } from '../game';
 import { ResponseWrapper } from '../../shared';
 
 @Component({
@@ -22,13 +21,10 @@ export class QuestionDialogComponent implements OnInit {
     authorities: any[];
     isSaving: boolean;
 
-    games: Game[];
-
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
         private questionService: QuestionService,
-        private gameService: GameService,
         private eventManager: EventManager
     ) {
     }
@@ -36,8 +32,6 @@ export class QuestionDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.gameService.query()
-            .subscribe((res: ResponseWrapper) => { this.games = res.json; }, (res: ResponseWrapper) => this.onError(res.json));
     }
     clear() {
         this.activeModal.dismiss('cancel');
@@ -82,10 +76,6 @@ export class QuestionDialogComponent implements OnInit {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    trackGameById(index: number, item: Game) {
-        return item.id;
     }
 
     getSelected(selectedVals: Array<any>, option: any) {

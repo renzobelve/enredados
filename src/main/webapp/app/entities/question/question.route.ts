@@ -5,7 +5,6 @@ import { UserRouteAccessService } from '../../shared';
 import { PaginationUtil } from 'ng-jhipster';
 
 import { QuestionComponent } from './question.component';
-import { QuestionDetailComponent } from './question-detail.component';
 import { QuestionPopupComponent } from './question-dialog.component';
 import { QuestionDeletePopupComponent } from './question-delete-dialog.component';
 
@@ -34,14 +33,6 @@ export const questionRoute: Routes = [
         resolve: {
             'pagingParams': QuestionResolvePagingParams
         },
-        data: {
-            authorities: ['ROLE_USER'],
-            pageTitle: 'Questions'
-        },
-        canActivate: [UserRouteAccessService]
-    }, {
-        path: 'question/:id',
-        component: QuestionDetailComponent,
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Questions'

@@ -71,7 +71,7 @@ public class UserDTO {
         Set<String> authorities) {
 
         this.id = id;
-        this.login = email;
+        this.login = login;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -98,7 +98,7 @@ public class UserDTO {
     }
 
     public void setLogin(String login) {
-        this.login = this.getEmail();
+        this.login = login;
     }
 
     public String getFirstName() {

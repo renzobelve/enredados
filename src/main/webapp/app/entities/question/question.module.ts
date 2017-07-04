@@ -6,7 +6,6 @@ import {
     QuestionService,
     QuestionPopupService,
     QuestionComponent,
-    QuestionDetailComponent,
     QuestionDialogComponent,
     QuestionPopupComponent,
     QuestionDeletePopupComponent,
@@ -28,7 +27,6 @@ const ENTITY_STATES = [
     ],
     declarations: [
         QuestionComponent,
-        QuestionDetailComponent,
         QuestionDialogComponent,
         QuestionDeleteDialogComponent,
         QuestionPopupComponent,
