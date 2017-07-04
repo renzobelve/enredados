@@ -66,11 +66,11 @@ Generic styles
 
 .footer {
     border-top: 1px solid rgba(0,0,0,.125);
-    position:fixed;
+/*    position:absolute;
     left:0px;
     bottom:0px;
     height:100px;
-    width:100%;
+    width:100%;*/
 }
 
 /* ==========================================================================

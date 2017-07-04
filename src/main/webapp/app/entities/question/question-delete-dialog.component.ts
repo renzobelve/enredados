@@ -36,7 +36,7 @@ export class QuestionDeleteDialogComponent {
             });
             this.activeModal.dismiss(true);
         });
-        this.alertService.success(`A Question is deleted with identifier ${id}`, null, null);
+        this.alertService.success(`Se ha eliminado una pregunta: ${id}`, null, null);
     }
 }
 

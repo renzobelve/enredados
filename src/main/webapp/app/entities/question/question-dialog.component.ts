@@ -55,8 +55,8 @@ export class QuestionDialogComponent implements OnInit {
 
     private onSaveSuccess(result: Question, isCreated: boolean) {
         this.alertService.success(
-            isCreated ? `A new Question is created with identifier ${result.id}`
-            : `A Question is updated with identifier ${result.id}`,
+            isCreated ? `Se ha creado una nueva pregunta: ${result.id}`
+            : `Se ha actualizado una pregunta: ${result.id}`,
             null, null);
 
         this.eventManager.broadcast({ name: 'questionListModification', content: 'OK'});

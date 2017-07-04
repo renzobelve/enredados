@@ -1,67 +1,75 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myQuestionLabel">Create or edit a Question</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <h4 class="modal-title" id="myQuestionLabel">Crear Pregunta</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"(click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!question.id">
-            <label for="id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="question.id" readonly />
-        </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_question">Question</label>
+            <label class="form-control-label" for="field_question">Pregunta</label>
             <input type="text" class="form-control" name="question" id="field_question"
                 [(ngModel)]="question.question"
             required />
             <div [hidden]="!(editForm.controls.question?.dirty && editForm.controls.question?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.question?.errors?.required">
-                   This field is required.
+                   El campo es requerido.
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_type">Type</label>
+            <label class="form-control-label" for="field_type">Tipo</label>
             <select class="form-control" name="type" [(ngModel)]="question.type" id="field_type"  required>
-                <option value="IMAGE">IMAGE</option>
-                <option value="TEXT">TEXT</option>
+                <option value="IMAGE">IMAGEN</option>
+                <option value="TEXT">TEXTO</option>
             </select>
             <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.type?.errors?.required">
-                   This field is required.
+                   El campo es requerido.
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_answerTime">Answer Time</label>
+            <label class="form-control-label" for="field_dificulty">Dificultad</label>
+            <select class="form-control" name="dificulty" [(ngModel)]="question.dificulty" id="field_dificulty" required>
+                <option value="EASY">FACIL</option>
+                <option value="MEDIUM">MEDIO</option>
+                <option value="HARD">DIFICIL</option>
+            </select>
+            <div [hidden]="!(editForm.controls.dificulty?.dirty && editForm.controls.dificulty?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.dificulty?.errors?.required">
+                   El campo es requerido.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="field_answerTime">Tiempo</label>
             <input type="number" class="form-control" name="answerTime" id="field_answerTime"
                 [(ngModel)]="question.answerTime"
             required />
             <div [hidden]="!(editForm.controls.answerTime?.dirty && editForm.controls.answerTime?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.answerTime?.errors?.required">
-                   This field is required.
+                   El campo es requerido.
                 </small>
                 <small class="form-text text-danger"
                     [hidden]="!editForm.controls.answerTime?.errors?.number">
-                    This field should be a number.
+                    El campo debe ser un valor numerico.
                 </small>
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" for="field_answer">Answer</label>
+            <label class="form-control-label" for="field_answer">Respuesta</label>
             <input type="text" class="form-control" name="answer" id="field_answer"
                 [(ngModel)]="question.answer"
             required />
             <div [hidden]="!(editForm.controls.answer?.dirty && editForm.controls.answer?.invalid)">
                 <small class="form-text text-danger"
                    [hidden]="!editForm.controls.answer?.errors?.required">
-                   This field is required.
+                   El campo es requerido.
                 </small>
             </div>
         </div>
@@ -69,10 +77,10 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span>Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;<span>Cancelar</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span>Save</span>
+            <span class="fa fa-save"></span>&nbsp;<span>Crear</span>
         </button>
     </div>
 </form>
