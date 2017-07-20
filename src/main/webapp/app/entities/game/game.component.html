@@ -1,0 +1,36 @@
+<div>
+    <h2>
+        <span>Partidas</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row"></div>
+    <br/>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th jhiSortBy="creator"><span>Creador</span> <span class="fa fa-sort"></span></th>
+                    <th jhiSortBy="maxPlayers"><span>Cantidad de Jugadores</span> <span class="fa fa-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let game of games ;trackBy: trackId">
+                    <td>{{game.creator.user.login}}</td>
+                    <td>{{game.gamePlayers.length}} / {{game.maxPlayers}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button [disabled]="currentAccount.login==game.creator.user.login" type="submit" class="btn btn-primary btn-sm"> Unirse </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Pager is not implemented yet, so this is normal pagination instead -->
+    <div *ngIf="games && games.length">
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
+        </div>
+    </div>
+</div>

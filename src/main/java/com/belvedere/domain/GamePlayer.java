@@ -2,6 +2,7 @@ package com.belvedere.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -34,6 +35,7 @@ public class GamePlayer implements Serializable {
     private Player player;
 
     @ManyToOne
+    @JsonIgnore
     private Game game;
 
     /**

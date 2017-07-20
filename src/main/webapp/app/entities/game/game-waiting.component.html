@@ -1,0 +1,17 @@
+<div>
+    <h2><span>Esperando una Partida</span></h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-lg-6">
+            <p>ID: {{game.id}}</p>
+            <p>Max Players: {{game.maxPlayers}}</p>
+            <p>State: {{game.state}}</p>
+            <div *ngFor="let gamePlayer of game.gamePlayers">
+                <p>Player: {{gamePlayer.player.user.login}}</p>
+            </div>
+            
+        </div>
+    </div>
+    <br/>
+
+</div>

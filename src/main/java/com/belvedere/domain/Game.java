@@ -50,6 +50,9 @@ public class Game implements Serializable {
     @Column(name = "size", nullable = false)
     private Integer size;
 
+    @ManyToOne
+    private Player creator;
+    
     @Column(name = "first_player")
     private Integer firstPlayer;
 
@@ -59,8 +62,7 @@ public class Game implements Serializable {
     @Column(name = "active_question")
     private Integer activeQuestion;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private List<GamePlayer> gamePlayers = new ArrayList<>();
     
@@ -93,6 +95,7 @@ public class Game implements Serializable {
         this.firstPlayer = null;
         this.activePlayer = null;
         this.activeQuestion = null;
+        this.creator = creator;
         this.addPlayer(creator);
 
         switch (maxPlayers) {
@@ -230,6 +233,14 @@ public class Game implements Serializable {
 
     public void setWinner(Player winner) {
         this.winner = winner;
+    }
+    
+    public Player getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Player creator) {
+        this.creator = creator;
     }
 
     @Override

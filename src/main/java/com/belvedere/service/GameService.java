@@ -3,6 +3,7 @@ package com.belvedere.service;
 import com.belvedere.domain.Game;
 import com.belvedere.domain.Player;
 import com.belvedere.domain.Question;
+import com.belvedere.domain.enumeration.GameState;
 import com.belvedere.domain.enumeration.LevelName;
 import com.belvedere.domain.enumeration.QuestionDificulty;
 import com.belvedere.domain.enumeration.QuestionType;
@@ -91,6 +92,16 @@ public class GameService {
     @Transactional(readOnly = true)
     public Page<Game> findAll(Pageable pageable) {
         return gameRepository.findAll(pageable);
+    }
+    
+    /**
+     * Get all OPEN games.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public Page<Game> findOpen(Pageable pageable) {
+        return gameRepository.findByState(pageable, GameState.OPEN);
     }
 
     /**

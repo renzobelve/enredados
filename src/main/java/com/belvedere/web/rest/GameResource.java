@@ -87,7 +87,7 @@ public class GameResource {
     @GetMapping("/games")
     @Timed
     public ResponseEntity<List<Game>> getAllGames(@ApiParam Pageable pageable) {
-        Page<Game> page = gameService.findAll(pageable);
+        Page<Game> page = gameService.findOpen(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/games");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

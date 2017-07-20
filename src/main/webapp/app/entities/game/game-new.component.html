@@ -1,0 +1,30 @@
+<div>
+    <h2><span>Crear una Partida</span></h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-lg-6">
+            <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+                  <jhi-alert-error></jhi-alert-error>
+                  <div class="form-group">
+                    <label class="form-control-label" for="field_players">Cantidad de Jugadores</label>
+                    <select class="form-control" name="players" [(ngModel)]="game.maxPlayers" id="field_players"  required>
+                        <option value="2">2 Jugadores</option>
+                        <option value="3">3 Jugadores</option>
+                        <option value="4">4 Jugadores</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.players?.dirty && editForm.controls.players?.invalid)">
+                        <small class="form-text text-danger"
+                           [hidden]="!editForm.controls.players?.errors?.required">
+                            El campo es requerido.
+                        </small>
+                    </div>
+                </div>
+                <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                        <span>Crear</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <br/>
+
+</div>

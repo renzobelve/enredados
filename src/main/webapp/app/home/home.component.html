@@ -8,10 +8,15 @@
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account"
-                    > Ingresaste como {{account.login}} </span>
+                <span *ngIf="account"> Ingresaste como {{account.login}} </span>
             </div>
-
+            
+            <div *ngSwitchCase="true">
+                <a *jhiHasAnyAuthority="'ROLE_USER'" routerLink="game-new" class="btn btn-success" >Crear Partida</a>
+                <a *jhiHasAnyAuthority="'ROLE_USER'" routerLink="/game" class="btn btn-warning" >Unirse a una Partida</a>
+                <button type="button"  class="btn btn-primary" (click)="logout()">Salir</button>
+            </div>
+            
             <div *ngSwitchCase="false">
                 <button (click)="login()" class="btn btn-primary"> Ingresar </button>
                 <a routerLink="register" class="btn btn-info"> Registrarse </a>
