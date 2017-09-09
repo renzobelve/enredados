@@ -16,7 +16,7 @@ export const levelRoute: Routes = [
         path: 'level',
         component: LevelComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Levels'
         },
         canActivate: [UserRouteAccessService]
@@ -24,7 +24,7 @@ export const levelRoute: Routes = [
         path: 'level/:id',
         component: LevelDetailComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Levels'
         },
         canActivate: [UserRouteAccessService]
@@ -36,7 +36,7 @@ export const levelPopupRoute: Routes = [
         path: 'level-new',
         component: LevelPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Levels'
         },
         canActivate: [UserRouteAccessService],
@@ -46,7 +46,7 @@ export const levelPopupRoute: Routes = [
         path: 'level/:id/edit',
         component: LevelPopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Levels'
         },
         canActivate: [UserRouteAccessService],
@@ -56,7 +56,7 @@ export const levelPopupRoute: Routes = [
         path: 'level/:id/delete',
         component: LevelDeletePopupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Levels'
         },
         canActivate: [UserRouteAccessService],

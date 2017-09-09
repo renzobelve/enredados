@@ -1,25 +1,20 @@
-<div class="row">
-    <div class="col-md-3">
-        <span class="hipster img-fluid img-rounded"></span>
-    </div>
-    <div class="col-md-9">
-        <h1 class="display-4">Enredados * </h1>
-        <p class="lead">La diversión de aprender</p>
-
-        <div [ngSwitch]="isAuthenticated()">
-            <div class="alert alert-success" *ngSwitchCase="true">
-                <span *ngIf="account"> Ingresaste como {{account.login}} </span>
+<div [ngSwitch]="isAuthenticated()">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3 col-xs-12 container-menu">
+            <div class="row form-group-botones" *ngSwitchCase="false">
+                <div class="col-lg-4 offset-lg-4">
+                    <button (click)="login()" class="boton" name="button">Ingresar</button>
+                </div>
+                <div class="col-lg-4 offset-lg-4">
+                    <a routerLink="register"><button class="boton" name="button">Registrarse</button></a>
+                </div>
+                <div class="col-lg-4 offset-lg-4">
+                    <button class="boton" type="button" name="button">¿Como se juega?</button>
+                </div>
             </div>
-            
             <div *ngSwitchCase="true">
-                <a *jhiHasAnyAuthority="'ROLE_USER'" routerLink="game-new" class="btn btn-success" >Crear Partida</a>
-                <a *jhiHasAnyAuthority="'ROLE_USER'" routerLink="/game" class="btn btn-warning" >Unirse a una Partida</a>
+                <p>Usuario Logueado</p>
                 <button type="button"  class="btn btn-primary" (click)="logout()">Salir</button>
-            </div>
-            
-            <div *ngSwitchCase="false">
-                <button (click)="login()" class="btn btn-primary"> Ingresar </button>
-                <a routerLink="register" class="btn btn-info"> Registrarse </a>
             </div>
         </div>
     </div>

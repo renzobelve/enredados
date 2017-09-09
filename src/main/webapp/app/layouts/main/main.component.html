@@ -1,10 +1,14 @@
 <div>
     <router-outlet name="navbar"></router-outlet>
 </div>
-<div class="container-fluid">
-    <div class="card jh-card">
+<div class="background">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-xs-12 offset-lg-4">
+                <img class="img-fluid" src="../../../content/images/logo.png" alt="logo">
+            </div>
+        </div>
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>
     </div>
-    <jhi-footer></jhi-footer>
 </div>

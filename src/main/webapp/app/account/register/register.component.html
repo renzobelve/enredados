@@ -1,86 +1,83 @@
-<div>
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h1>Registrarse</h1>
 
-            <div class="alert alert-success" *ngIf="success">
-                <strong>Te has registrado correctamente</strong> ¡Ya podes empezar a jugar Enredados!
-            </div>
-
-            <div class="alert alert-danger" *ngIf="error">
-                <strong>¡Ha ocurrido un error!</strong> Por favor intente nuevamente.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorUserExists">
-                <strong>¡El E-Mail ingresado ya se encuentra en uso!</strong> Por favor elija otro.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="errorEmailExists">
-                <strong>¡El E-Mail ingresado ya se encuentra en uso!</strong> Por favor elija otro.
-            </div>
-
-            <div class="alert alert-danger" *ngIf="doNotMatch">
-                Las contraseñas no coinciden
+<div class="row">
+    <div class="col-lg-6 offset-lg-3 col-xs-12 container-menu">
+        <div class="row">
+            <div class="col-sm-4 offset-sm-4  title-box">
+                <span><h1>Registrarse</h1></span>
             </div>
         </div>
-        <div class="col-md-8 offset-md-2">
-            <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" *ngIf="!success">
-                <div class="form-group">
-                    <label class="form-control-label" for="email">E-Mail</label>
-                    <input type="email" class="form-control" id="email" name="email" #email="ngModel"
-                           [(ngModel)]="registerAccount.email" minlength=5 maxlength=100 required>
-                    <div *ngIf="email.dirty && email.invalid">
-                        <small class="form-text text-danger" *ngIf="email.errors.required">
-                            El campo es requerido.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="email.errors.invalid">
-                            El E-Mail es invalido.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="email.errors.minlength">
-                            El campo debe tener como minimo 5 caracteres.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="email.errors.maxlength">
-                            El campo debe tener como maximo 100 caracteres.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" name="password" #password="ngModel"
-                           [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
-                    <div *ngIf="password.dirty && password.invalid">
-                        <small class="form-text text-danger" *ngIf="password.errors.required">
-                            El campo es requerido.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="password.errors.minlength">
-                            El campo debe tener como minimo 4 caracteres.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="password.errors.maxlength">
-                            El campo debe tener como maximo 50 caracteres.
-                        </small>
-                    </div>
-                    <jhi-password-strength-bar [passwordToCheck]="registerAccount.password"></jhi-password-strength-bar>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="confirmPassword">Repetir contraseña</label>
-                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel"
-                           [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required>
-                    <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
-                        <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required">
-                            El campo es requerido.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.minlength">
-                            El campo debe tener como minimo 4 caracteres.
-                        </small>
-                        <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.maxlength">
-                            El campo debe tener como maximo 50 caracteres.
-                        </small>
-                    </div>
-                </div>
+        <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm">
+            <div class="row form-group-botones">
+                <div class="col-sm-4 offset-sm-4 ">
 
-                <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary">Registrarse</button>
-                <a routerLink="/" class="btn btn-info">Volver</a>
-            </form>
-        </div>
+                    <div *ngIf="success">
+                        <small class="form-text text-warning">Te has registrado correctamente ¡Ya podes empezar a jugar Enredados! </small>
+                    </div>
+
+                    <div *ngIf="error">
+                        <small class="form-text text-warning">¡Ha ocurrido un error! Por favor intente nuevamente. </small>
+                    </div>
+
+                    <div *ngIf="errorUserExists">
+                        <small class="form-text text-warning">¡El E-Mail ingresado ya se encuentra en uso! Por favor elija otro.</small>
+                    </div>
+
+                    <div *ngIf="errorEmailExists">
+                        <small class="form-text text-warning">¡El E-Mail ingresado ya se encuentra en uso! Por favor elija otro. </small>
+                    </div>
+
+                    <div *ngIf="doNotMatch">
+                        <small class="form-text text-warning"> Las contraseñas no coinciden </small>
+                    </div>
+
+                    <div class="form-group registro">
+                        <input type="email" class="form-control" id="email" name="email" #email="ngModel" [(ngModel)]="registerAccount.email" minlength=5 maxlength=100 required placeholder="Email">
+                        <div *ngIf="email.dirty && email.invalid">
+                            <small class="form-text text-warning" *ngIf="email.errors.required">
+                                El campo es requerido.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="email.errors.invalid">
+                                El E-Mail es invalido.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="email.errors.minlength">
+                                El campo debe tener como minimo 5 caracteres.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="email.errors.maxlength">
+                                El campo debe tener como maximo 100 caracteres.
+                            </small>
+                        </div>
+                        <input type="password" class="form-control" id="password" name="password" #password="ngModel" [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required placeholder="Contraseña">
+                        <div *ngIf="password.dirty && password.invalid">
+                            <small class="form-text text-warning" *ngIf="password.errors.required">
+                                El campo es requerido.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="password.errors.minlength">
+                                El campo debe tener como minimo 4 caracteres.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="password.errors.maxlength">
+                                El campo debe tener como maximo 50 caracteres.
+                            </small>
+                        </div>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" #confirmPasswordInput="ngModel" [(ngModel)]="confirmPassword" minlength=4 maxlength=50 required placeholder="Repetir contraseña">
+                        <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
+                            <small class="form-text text-warning" *ngIf="confirmPasswordInput.errors.required">
+                                El campo es requerido.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="confirmPasswordInput.errors.minlength">
+                                El campo debe tener como minimo 4 caracteres.
+                            </small>
+                            <small class="form-text text-warning" *ngIf="confirmPasswordInput.errors.maxlength">
+                                El campo debe tener como maximo 50 caracteres.
+                            </small>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-4 offset-sm-4">
+                <button type="submit" [disabled]="registerForm.form.invalid" class="boton">Registrarse</button>
+                <a routerLink="/"><button class="boton" name="button">Volver</button></a>
+            </div>
+        </form>
     </div>
 </div>

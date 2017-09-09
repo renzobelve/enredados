@@ -40,4 +40,11 @@ export class GameService {
             return res.json();
         });
     }
+
+    addPlayer(gameID: string, playerID: string): Observable<ResponseWrapper> {
+        const body = {id: gameID, creatorID: playerID};
+        return this.http.post(this.resourceUrl + '/add-player', body).map((res: Response) => {
+            return res.json();
+        });
+    }
 }

@@ -1,59 +1,63 @@
-<div>
-    <h2>
-        <span>Usuarios / Jugadores</span>
-        <button class="btn btn-primary float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
-                <span class="fa fa-plus"></span> <span>Crear</span>
-        </button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <div class="row"></div>
-    <br/>
-    <div class="table-responsive" *ngIf="players">
-        <table class="table table-striped">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                    <th jhiSortBy="user.email"><span>E-Mail</span> <span class="fa fa-sort"></span></th>
-                    <th><span>Estado</span></th>
-                    <th><span>Roles</span></th>
-                    <th jhiSortBy="user.createdDate"><span>Creado</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="level"><span>Nivel</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="points"><span>Puntos</span> <span class="fa fa-sort"></span></th>
-                    <th class="text-right"><span>Acciones</span></th>
-                </tr>
-            </thead>
-            <tbody *ngIf ="players">
-                <tr *ngFor="let player of players; trackBy: trackIdentity">
-                    <td>{{ player.user.email }}</td>
-                    <td>
-                        <span class="badge badge-danger hand" (click)="setActive(player.user, true)" *ngIf="!player.user.activated" >Inactivo</span>
-                        <span class="badge badge-success hand" (click)="setActive(player.user, false)" *ngIf="player.user.activated">Activo</span>
-                    </td>
-                    <td>
-                        <div *ngFor="let authority of player.user.authorities">
-                            <span *ngIf="authority.name=='ROLE_ADMIN'" class="badge badge-warning hand">ADMIN</span>
-                            <span *ngIf="authority.name=='ROLE_USER'" class="badge badge-info hand">USER</span>
-                        </div>
-                    </td>
-                    <td>{{ player.user.createdDate | date:'dd/MM/yy' }}</td>
-                    <td>{{ player.level.name }}</td>
-                    <td>{{ player.points }}</td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"[routerLink]="['/', { outlets: { popup: 'user-management/'+ player.user.login + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
-                                    <span class="fa fa-pencil"></span>
-                            </button>
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'user-management/'+ player.user.login + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm" [disabled]="currentAccount.login==player.user.login">
-                                    <span class="fa fa-remove"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div *ngIf="players">
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+<div class="container-fluid">
+    <div class="card jh-card">
+        <div>
+            <h2>
+                <span>Usuarios / Jugadores</span>
+                <button class="btn btn-primary float-right" [routerLink]="['/', { outlets: { popup: ['user-management-new'] } }]">
+                        <span class="fa fa-plus"></span> <span>Crear</span>
+                </button>
+            </h2>
+            <jhi-alert></jhi-alert>
+            <div class="row"></div>
+            <br/>
+            <div class="table-responsive" *ngIf="players">
+                <table class="table table-striped">
+                    <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                            <th jhiSortBy="user.email"><span>E-Mail</span> <span class="fa fa-sort"></span></th>
+                            <th><span>Estado</span></th>
+                            <th><span>Roles</span></th>
+                            <th jhiSortBy="user.createdDate"><span>Creado</span> <span class="fa fa-sort"></span></th>
+                            <th jhiSortBy="level"><span>Nivel</span> <span class="fa fa-sort"></span></th>
+                            <th jhiSortBy="points"><span>Puntos</span> <span class="fa fa-sort"></span></th>
+                            <th class="text-right"><span>Acciones</span></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf ="players">
+                        <tr *ngFor="let player of players; trackBy: trackIdentity">
+                            <td>{{ player.user.email }}</td>
+                            <td>
+                                <span class="badge badge-danger hand" (click)="setActive(player.user, true)" *ngIf="!player.user.activated" >Inactivo</span>
+                                <span class="badge badge-success hand" (click)="setActive(player.user, false)" *ngIf="player.user.activated">Activo</span>
+                            </td>
+                            <td>
+                                <div *ngFor="let authority of player.user.authorities">
+                                    <span *ngIf="authority.name=='ROLE_ADMIN'" class="badge badge-warning hand">ADMIN</span>
+                                    <span *ngIf="authority.name=='ROLE_USER'" class="badge badge-info hand">USER</span>
+                                </div>
+                            </td>
+                            <td>{{ player.user.createdDate | date:'dd/MM/yy' }}</td>
+                            <td>{{ player.level.name }}</td>
+                            <td>{{ player.points }}</td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"[routerLink]="['/', { outlets: { popup: 'user-management/'+ player.user.login + '/edit'} }]" replaceUrl="true" class="btn btn-primary btn-sm">
+                                            <span class="fa fa-pencil"></span>
+                                    </button>
+                                    <button type="submit" [routerLink]="['/', { outlets: { popup: 'user-management/'+ player.user.login + '/delete'} }]" replaceUrl="true" class="btn btn-danger btn-sm" [disabled]="currentAccount.login==player.user.login">
+                                            <span class="fa fa-remove"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="players">
+                <div class="row justify-content-center">
+                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+                </div>
+            </div>
         </div>
     </div>
 </div>

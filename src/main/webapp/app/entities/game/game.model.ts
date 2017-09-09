@@ -22,6 +22,7 @@ export class Game {
         public winner?: Player,
         public questions?: Question[],
         public gamePlayers?: GamePlayer[],
+        public date?: Date,
     ) {
 
     }

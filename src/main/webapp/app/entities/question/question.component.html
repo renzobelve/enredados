@@ -1,57 +1,61 @@
-<div>
-    <h2>
-        <span>Preguntas</span>
-        <button class="btn btn-primary float-right create-question" [routerLink]="['/', { outlets: { popup: ['question-new'] } }]"><span class="fa fa-plus"></span><span> Crear </span></button>
-    </h2>
-    <jhi-alert></jhi-alert>
-    <div class="row"></div>
-    <br/>
-    <div class="table-responsive" *ngIf="questions">
-        <table class="table table-striped">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-                    <th jhiSortBy="question"><span>Pregunta</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="type"><span>Tipo</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="dificulty"><span>Dificultad</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="answerTime"><span>Tiempo</span> <span class="fa fa-sort"></span></th>
-                    <th jhiSortBy="answer"><span>Respuesta</span> <span class="fa fa-sort"></span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let question of questions ;trackBy: trackId">
-                    <td>{{question.question}}</td>
-                    <td>{{question.type}}</td>
-                    <td>{{question.dificulty}}</td>
-                    <td>{{question.answerTime}}</td>
-                    <td>{{question.answer}}</td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    [routerLink]="['/', { outlets: { popup: 'question/'+ question.id + '/edit'} }]"
-                                    replaceUrl="true"
-                                    class="btn btn-primary btn-sm">
-                                    <span class="fa fa-pencil"></span>
-                            </button>
-                            <button type="submit"
-                                    [routerLink]="['/', { outlets: { popup: 'question/'+ question.id + '/delete'} }]"
-                                    replaceUrl="true"
-                                    class="btn btn-danger btn-sm">
-                                    <span class="fa fa-remove"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- Pager is not implemented yet, so this is normal pagination instead -->
-    <div *ngIf="questions && questions.length">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
+<div class="container-fluid">
+    <div class="card jh-card">
+        <div>
+            <h2>
+                <span>Preguntas</span>
+                <button class="btn btn-primary float-right create-question" [routerLink]="['/', { outlets: { popup: ['question-new'] } }]"><span class="fa fa-plus"></span><span> Crear </span></button>
+            </h2>
+            <jhi-alert></jhi-alert>
+            <div class="row"></div>
+            <br/>
+            <div class="table-responsive" *ngIf="questions">
+                <table class="table table-striped">
+                    <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                            <th jhiSortBy="question"><span>Pregunta</span> <span class="fa fa-sort"></span></th>
+                            <th jhiSortBy="type"><span>Tipo</span> <span class="fa fa-sort"></span></th>
+                            <th jhiSortBy="dificulty"><span>Dificultad</span> <span class="fa fa-sort"></span></th>
+                            <th jhiSortBy="answerTime"><span>Tiempo</span> <span class="fa fa-sort"></span></th>
+                            <th jhiSortBy="answer"><span>Respuesta</span> <span class="fa fa-sort"></span></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let question of questions ;trackBy: trackId">
+                            <td>{{question.question}}</td>
+                            <td>{{question.type}}</td>
+                            <td>{{question.dificulty}}</td>
+                            <td>{{question.answerTime}}</td>
+                            <td>{{question.answer}}</td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            [routerLink]="['/', { outlets: { popup: 'question/'+ question.id + '/edit'} }]"
+                                            replaceUrl="true"
+                                            class="btn btn-primary btn-sm">
+                                            <span class="fa fa-pencil"></span>
+                                    </button>
+                                    <button type="submit"
+                                            [routerLink]="['/', { outlets: { popup: 'question/'+ question.id + '/delete'} }]"
+                                            replaceUrl="true"
+                                            class="btn btn-danger btn-sm">
+                                            <span class="fa fa-remove"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pager is not implemented yet, so this is normal pagination instead -->
+            <div *ngIf="questions && questions.length">
+                <div class="row justify-content-center">
+                    <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+                </div>
+                <div class="row justify-content-center">
+                    <ngb-pagination [collectionSize]="totalItems" [(page)]="page"  (pageChange)="loadPage(page)"></ngb-pagination>
+                </div>
+            </div>
         </div>
     </div>
 </div>

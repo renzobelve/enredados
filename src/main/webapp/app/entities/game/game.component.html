@@ -9,6 +9,7 @@
         <table class="table table-striped">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+                    <th jhiSortBy="date"><span>Fecha</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="creator"><span>Creador</span> <span class="fa fa-sort"></span></th>
                     <th jhiSortBy="maxPlayers"><span>Cantidad de Jugadores</span> <span class="fa fa-sort"></span></th>
                     <th></th>
@@ -16,11 +17,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let game of games ;trackBy: trackId">
+                    <td>{{game.date | date: 'dd/MM/yyyy HH:MM'}}</td>
                     <td>{{game.creator.user.login}}</td>
                     <td>{{game.gamePlayers.length}} / {{game.maxPlayers}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button [disabled]="currentAccount.login==game.creator.user.login" type="submit" class="btn btn-primary btn-sm"> Unirse </button>
+                            <form (ngSubmit)="addPlayer(game.id)">
+                                <button [disabled]="currentAccount.login==game.creator.user.login" type="submit" class="btn btn-primary btn-sm"> Unirse </button>
+                            </form>
                         </div>
                     </td>
                 </tr>

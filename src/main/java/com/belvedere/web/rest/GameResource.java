@@ -122,27 +122,26 @@ public class GameResource {
     /**
      * POST /games/add-player : Add a player to a game.
      *
-     * @param gameID
-     * @param playerID
+     * @param gameDTO
      * @return the ResponseEntity with status 201 (Created) and with body the
      * new game, or with status 400 (Bad Request) if the game has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/games/add-player")
     @Timed
-    public ResponseEntity<Game> addPlayer(@RequestParam(value = "gameID") String gameID, @RequestParam(value = "playerID") String playerID) throws URISyntaxException {
+    public ResponseEntity addPlayer(@RequestBody GameDTO gameDTO) throws URISyntaxException {
         try {
             // Se busca al juego
-            Game game = gameService.findOne(Long.parseLong(gameID));
+            Game game = gameService.findOne(gameDTO.getId());
             // Se busca al jugador
-            Player player = playerService.findOne(Long.parseLong(playerID));
+            Player player = playerService.findOne(gameDTO.getCreatorID());
             // Se utiliza el servicio para agregar un jugador
             Game result = gameService.addPlayer(game, player);
 
-            return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString())).body(result);
+            return ResponseEntity.ok().body("El jugador se ha unido a la partida: " + result.getId());
 
         } catch (Exception ex) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "error", ex.getMessage())).body(null);
+            return ResponseEntity.badRequest().body(ex.getMessage());
         }
 
     }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRouteSnapshot, NavigationEnd, RoutesRecognized } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRouteSnapshot, NavigationEnd, RoutesRecognized} from '@angular/router';
 
-import { Title } from '@angular/platform-browser';
-import { StateStorageService } from '../../shared';
+import {Title} from '@angular/platform-browser';
+import {StateStorageService, Principal} from '../../shared';
 
 @Component({
     selector: 'jhi-main',
@@ -11,6 +11,7 @@ import { StateStorageService } from '../../shared';
 export class JhiMainComponent implements OnInit {
 
     constructor(
+        private principal: Principal,
         private titleService: Title,
         private router: Router,
         private $storageService: StateStorageService,
@@ -32,5 +33,9 @@ export class JhiMainComponent implements OnInit {
                 this.titleService.setTitle(this.getPageTitle(this.router.routerState.snapshot.root));
             }
         });
+    }
+
+    isAuthenticated() {
+        return this.principal.isAuthenticated();
     }
 }

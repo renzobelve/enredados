@@ -1,20 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs/Rx';
-import { EventManager, ParseLinks, PaginationUtil, AlertService } from 'ng-jhipster';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs/Rx';
+import {EventManager, ParseLinks, PaginationUtil, AlertService} from 'ng-jhipster';
 
-import { Game } from './game.model';
-import { GameService } from './game.service';
-import { ITEMS_PER_PAGE, Principal, ResponseWrapper } from '../../shared';
-import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import {Game} from './game.model';
+import {GameService} from './game.service';
+import {ITEMS_PER_PAGE, Principal, ResponseWrapper} from '../../shared';
+import {PaginationConfig} from '../../blocks/config/uib-pagination.config';
 
 @Component({
     selector: 'jhi-game',
     templateUrl: './game.component.html'
 })
 export class GameComponent implements OnInit, OnDestroy {
-
-currentAccount: any;
+    currentAccount: any;
     games: Game[];
     error: any;
     success: any;
@@ -53,10 +52,11 @@ currentAccount: any;
         this.gameService.query({
             page: this.page - 1,
             size: this.itemsPerPage,
-            sort: this.sort()}).subscribe(
+            sort: this.sort()
+        }).subscribe(
             (res: ResponseWrapper) => this.onSuccess(res.json, res.headers),
             (res: ResponseWrapper) => this.onError(res.json)
-        );
+            );
     }
     loadPage(page: number) {
         if (page !== this.previousPage) {
@@ -65,7 +65,8 @@ currentAccount: any;
         }
     }
     transition() {
-        this.router.navigate(['/game'], {queryParams:
+        this.router.navigate(['/game'], {
+            queryParams:
             {
                 page: this.page,
                 size: this.itemsPerPage,
@@ -117,7 +118,19 @@ currentAccount: any;
         // this.page = pagingParams.page;
         this.games = data;
     }
+
     private onError(error) {
-        this.alertService.error(error.message, null, null);
+        this.alertService.error(error._body);
+    }
+
+    addPlayer(gameID) {
+        this.gameService.addPlayer(gameID, this.currentAccount.id).subscribe(
+            (res: ResponseWrapper) => this.onSuccessAddPlayer(res, gameID),
+            (res: ResponseWrapper) => this.onError(res));
+    }
+
+    private onSuccessAddPlayer(result, id) {
+        this.alertService.success(result._body);
+        this.router.navigate(['/game-waiting', id]);
     }
 }

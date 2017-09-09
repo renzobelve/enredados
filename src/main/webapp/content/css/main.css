@@ -1,0 +1,122 @@
+/*
+  Inicio Estilos comunes
+*/
+
+body {
+  background-image: url("../images/background.png");
+  background-repeat: no-repeat;
+}
+
+.img-fluid {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@font-face {
+    font-family: "FrontPage";
+    src: url(../font/front_page_supplement.otf) format("truetype");
+}
+
+
+/*
+Fin Estilos comunes
+*/
+
+
+/*
+  Inicio container menu
+*/
+
+.container-menu {
+  margin-top: 5em;
+  height: 300px;
+  background-color: rgba(131, 25, 25, 0.7);
+  border: 5px solid #000000;
+  border-radius: 40px 40px 40px 40px;
+}
+
+
+/*
+  Fin container menu
+*/
+
+
+/*
+  Inicio boton
+*/
+
+boton {
+  background-color: #C42626;
+  width: 100%;
+  margin-top: 0.5em;
+  padding: 0.5em;
+  border-radius: 40px 40px 40px 40px;
+  color: white;
+  border: none;
+  box-shadow: 4px 4px 0px #4C0E0E;
+
+  font-family: "FrontPage";
+  font-size: 14pt;
+
+  transition: 0.9s;
+  
+}
+
+.boton:hover {
+  background-color: #4C0E0E;
+  box-shadow: 4px 4px 0px #C42626;
+  transition: 0.9s;
+}
+
+.form-group-botones {
+  margin-top: 2em;
+}
+
+
+/*
+  Fin boton
+*/
+
+/*
+  Inicio Registro
+*/
+
+.registro input{
+  border-radius: 40px 40px 40px 40px;
+  margin-top: 5px;
+  font-size: 12pt;
+  font-family: "FrontPage";
+  text-align: center;
+  background-color: rgba(255,255,255, 0.6);
+  transition: 0.9s;
+  color: bold;
+
+}
+.registro input:focus{
+  background-color: rgba(255,255,255, 0.4);
+  transition: 0.9s;
+  border-color: #4C0E0E;
+  color: #4C0E0E;
+}
+textarea{
+  color: pink;
+}
+
+/*
+  Fin Registro
+*/
+
+
+.title-box{
+  color: white;
+  background-color: #C42626;
+  text-align: center;
+  padding: 0.5em;
+  position: absolute;
+  top: -30px;
+  border-radius: 40px 40px 40px 40px;
+  font-size: 9pt;
+  border: 2px solid;
+  border-color: #4C0E0E;
+}

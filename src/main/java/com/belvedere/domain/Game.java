@@ -15,6 +15,7 @@ import com.belvedere.domain.exception.GameFullException;
 import com.belvedere.domain.exception.PlayerInGameException;
 import com.belvedere.domain.exception.PlayerNotInGameException;
 import com.belvedere.domain.exception.PlayerNotInLevelException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +69,9 @@ public class Game implements Serializable {
     
     @ManyToOne
     private Player winner;
+    
+    @Column(name = "date")
+    private LocalDate date;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -96,6 +100,7 @@ public class Game implements Serializable {
         this.activePlayer = null;
         this.activeQuestion = null;
         this.creator = creator;
+        this.date = LocalDate.now();
         this.addPlayer(creator);
 
         switch (maxPlayers) {
@@ -241,6 +246,14 @@ public class Game implements Serializable {
 
     public void setCreator(Player creator) {
         this.creator = creator;
+    }
+    
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
@@ -437,6 +450,5 @@ public class Game implements Serializable {
         Player player = this.getGamePlayers().get(this.getActivePlayer()).getPlayer();
         return player;
     }
-
     
 }

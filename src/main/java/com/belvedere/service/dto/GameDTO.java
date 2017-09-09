@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class GameDTO {
 
     private Long id;
-    
+
     @NotNull
     private Long creatorID;
 
@@ -24,6 +24,20 @@ public class GameDTO {
      * Constructor.
      */
     public GameDTO() {
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
