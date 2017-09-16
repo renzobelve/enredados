@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         } else if (response.status === 400 && response._body === 'email address already in use') {
             this.errorEmailExists = 'ERROR';
         } else {
-            this.error = 'ERROR';
+            this.error = response._body;
         }
     }
 }

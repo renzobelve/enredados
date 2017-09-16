@@ -30,7 +30,7 @@ public class UserDTO {
     @Size(max = 50)
     private String lastName;
 
-    @Email
+    @Email(message = "La direccion de E-Mail ingresada es invalida")
     @NotBlank
     @Size(min = 5, max = 100)
     private String email;

@@ -12,9 +12,16 @@
                     <button class="boton" type="button" name="button">¿Como se juega?</button>
                 </div>
             </div>
-            <div *ngSwitchCase="true">
-                <p>Usuario Logueado</p>
-                <button type="button"  class="btn btn-primary" (click)="logout()">Salir</button>
+            <div class="row form-group-botones" *ngSwitchCase="true">
+                <div *jhiHasAnyAuthority="'ROLE_USER'" class="col-lg-4 offset-lg-4">
+                    <a routerLink="game-new"><button class="boton" name="button">Crear Partida</button></a>
+                </div>
+                <div *jhiHasAnyAuthority="'ROLE_USER'" class="col-lg-4 offset-lg-4">
+                    <a routerLink="game"><button class="boton" name="button">Unirse a una Partida</button></a>
+                </div>
+                <div class="col-lg-4 offset-lg-4">
+                    <button class="boton" name="button" (click)="logout()">Salir</button>
+                </div>
             </div>
         </div>
     </div>

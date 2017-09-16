@@ -46,7 +46,7 @@ Fin Estilos comunes
   Inicio boton
 */
 
-boton {
+.boton {
   background-color: #C42626;
   width: 100%;
   margin-top: 0.5em;
@@ -60,7 +60,6 @@ boton {
   font-size: 14pt;
 
   transition: 0.9s;
-  
 }
 
 .boton:hover {

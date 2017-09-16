@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Principal } from '../auth/principal.service';
 import { AuthServerProvider } from '../auth/auth-session.service';
 import { JhiTrackerService } from '../tracker/tracker.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginService {
@@ -10,7 +11,8 @@ export class LoginService {
     constructor(
         private principal: Principal,
         private trackerService: JhiTrackerService,
-        private authServerProvider: AuthServerProvider
+        private authServerProvider: AuthServerProvider,
+        private router: Router
     ) {}
 
     login(credentials, callback?) {
